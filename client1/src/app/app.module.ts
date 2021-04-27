@@ -4,6 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ɵInternalFormsSharedModule } from '@angular/forms';
 import {NavComponent } from './nav/nav.component';
 import {BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -19,8 +20,8 @@ import { MessagesComponent } from './messages/messages.component';
 import { ToastrModule } from 'ngx-toastr';
 import { SharedModule } from './_modules/shared.module';
 import { TestErrorsComponent } from './Errors/test-errors/test-errors.component';
-import { NotFoundComponent } from './errors/not-found/not-found.component';
-import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { NotFoundComponent } from './Errors/not-found/not-found.component';
+import { ServerErrorComponent } from './Errors/server-error/server-error.component';
 
 
 
@@ -45,7 +46,8 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    BrowserAnimationsModule
    
   ],
   providers: [],
