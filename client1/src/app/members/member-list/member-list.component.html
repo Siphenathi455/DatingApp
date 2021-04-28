@@ -1,5 +1,5 @@
 <div class="row">
     <div class="col-2">
-        <p *ngFor="let member of members">{{member.knownAs}}</p>
+        <p *ngFor="let member of members$ | async">{{member.knownAs}}</p>
     </div>
 </div>
