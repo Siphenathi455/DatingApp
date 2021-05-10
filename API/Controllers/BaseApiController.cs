@@ -5,8 +5,11 @@ using API.Entities;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using API.Helpers;
+
 namespace API.Controllers
 {
+    [ServiceFilter(typeof(LogUserActivity))]
     [ApiController]
     [Route("[controller]")]
     public class BaseApiController : ControllerBase
