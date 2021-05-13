@@ -45,7 +45,7 @@ namespace API.Data
         {
             var query = _context.Messages
                 .OrderByDescending(m => m.MessageSent)
-                .AsQueryable();
+                .AsQueryable());
 
             query = messageParams.Container switch
             {

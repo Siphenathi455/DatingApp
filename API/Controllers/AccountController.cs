@@ -32,18 +32,17 @@ namespace API.Controllers
             
             var user = _mapper.Map<AppUser>(registerDTO);
 
-             using var hmac = new HMACSHA512();
+             
 
-                user.Username = registerDTO.Username.ToLower();
-                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password));
-                user.PasswordSalt = hmac.Key;
+                user.UserName = registerDTO.Username.ToLower();
+               
           
              _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
              return new UserDto
              {
-                 Username = user.Username,
+                 Username = user.UserName,
                  Token = _tokenService.CreateToken(user),
                  KnownAs = user.KnownAs,
                  Gender = user.Gender
@@ -58,18 +57,12 @@ namespace API.Controllers
              .SingleOrDefaultAsync(x => x.Username == loginDTO.Username);
              if(user == null) return Unauthorized("Invalid username");
 
-             using var hmac = new HMACSHA512(user.PasswordSalt);
+            
 
-             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.Password));
-
-             for(int i = 0; i < computedHash.Length; i++)
-             {
-                 if(computedHash[i] !=user.PasswordHash[i]) return Unauthorized("Invalid password");
-             }
 
              return new UserDto
              {
-                 Username = user.Username,
+                 Username = user.UserName,
                  Token = _tokenService.CreateToken(user),
                  PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
                  KnownAs = user.KnownAs,
@@ -79,7 +72,7 @@ namespace API.Controllers
 
          private async Task<bool> UserExist(string username)
          {
-             return await _context.Users.AnyAsync(x => x.Username == username.ToLower());
+             return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
          }
     }
 }
