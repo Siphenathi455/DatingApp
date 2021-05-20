@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using API.Data;
-
+using System.Threading.Tasks;
 
 namespace API.Extensions
 {
@@ -36,6 +36,21 @@ namespace API.Extensions
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"])),
                     ValidateIssuer = false,
                     ValidateAudience = false,
+                };
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageRecieved = context =>{
+                        var accessToken = context.Request.Query["access_token"];
+
+                        var path = context.HttpContext.Request.Path;
+
+                        if(!string.NullOrEmpty(accesstoken) && path.StartWithSegments("/hubs"))
+                        {
+                            context.Token = accessToken;
+                        }
+                        return task.Completedtask;
+                    }
                 };
             });
 
