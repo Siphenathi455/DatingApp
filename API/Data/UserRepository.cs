@@ -42,10 +42,7 @@ namespace API.Data
             .ToListAsync();
         }
 
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
+  
 
         public void Update(AppUser user)
         {
@@ -82,6 +79,13 @@ namespace API.Data
               .SingleOrDefaultAsync();
 
 
+        }
+
+        public async Task<string> GetUserGender(string unsername)
+        {
+            return await _context.Users.Where(x => x.UserName == unsername).
+                Select(x => x.Gender).
+                FirstOrDefaultAsync();
         }
     }
 }
