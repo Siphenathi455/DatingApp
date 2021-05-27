@@ -7,8 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using API.Data;
 using System.Threading.Tasks;
+using API.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Extensions
 {
@@ -40,21 +41,21 @@ namespace API.Extensions
 
                 options.Events = new JwtBearerEvents
                 {
-                    OnMessageRecieved = context =>{
+                    OnMessageReceived = context =>{
                         var accessToken = context.Request.Query["access_token"];
 
                         var path = context.HttpContext.Request.Path;
 
-                        if(!string.NullOrEmpty(accesstoken) && path.StartWithSegments("/hubs"))
+                        if(!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
                         {
                             context.Token = accessToken;
                         }
-                        return task.Completedtask;
+                        return Task.CompletedTask;
                     }
                 };
             });
 
-            services.addAthorization(opt =>
+            services.AddAuthorization(opt =>
              {
                  opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin") );
                  opt.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator") );

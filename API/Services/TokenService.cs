@@ -16,7 +16,7 @@ namespace API.Services
     public class TokenService: ITokenService
     {
         private readonly SymmetricSecurityKey _key;
-        private readonly userManager<AppUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
         public TokenService(IConfiguration config, UserManager<AppUser> userManager)
         {
@@ -29,7 +29,7 @@ namespace API.Services
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
-                 new Claim(JwtRegisteredClaimNames.UniqueName, user.Username),
+                 new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
             };
 
             var roles = await _userManager.GetRolesAsync(user);

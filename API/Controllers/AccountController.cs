@@ -29,7 +29,7 @@ namespace API.Controllers
             _userManager = userManager;
             _mapper = mapper;
              _tokenService = tokenService;
-             _context = context;
+          
          }
          [HttpPost("register")]
          public async Task<ActionResult<UserDto>> Register(RegisterDTO registerDTO)
@@ -42,11 +42,11 @@ namespace API.Controllers
             
             var result = await _userManager.CreateAsync(user, registerDTO.Password);
         
-            if (!result.Succeeded) return BadRequest(result.Error);
+            if (!result.Succeeded) return BadRequest(result);
 
              var roleResult = await _userManager.AddToRoleAsync(user, "Member");
 
-             if (!roleResult.Succeeded) return BadRequest(result.Error);
+             if (!roleResult.Succeeded) return BadRequest(result);
 
              return new UserDto
              {
@@ -62,17 +62,17 @@ namespace API.Controllers
          {
              var user = await _userManager.Users
              .Include(p => p.Photos)
-             .SingleOrDefaultAsync(x => x.Username == loginDTO.Username.ToLower());
+             .SingleOrDefaultAsync(x => x.UserName == loginDTO.Username.ToLower());
              if(user == null) return Unauthorized("Invalid username");
 
             
-            var result = await _userManager.CheckPasswordSignInAsync(user, registerDTO.Password, false);
+            var result = await _userManager.CheckPasswordAsync(user, loginDTO.Password); //CheckPasswordSignInAsync
 
-            if (!result.Succeeded) return Unauthorized(result.Error);
+            if (!result) return Unauthorized(result);
              return new UserDto
              {
                  Username = user.UserName,
-                 Token = _tokenService.CreateToken(user),
+                 Token = await _tokenService.CreateToken(user),
                  PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
                  KnownAs = user.KnownAs,
                  Gender = user.Gender
@@ -81,7 +81,7 @@ namespace API.Controllers
 
          private async Task<bool> UserExist(string username)
          {
-             return await _signInManager.Users.AnyAsync(x => x.UserName == username.ToLower());
+             return await _signInManager.UserManager.Users.AnyAsync(x => x.UserName == username.ToLower());
          }
     }
 }
