@@ -14,10 +14,13 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 
+
 @NgModule({
-  declarations: [],
+  declarations: [
+    
+  ],
   imports: [
-    CommonModule,
+      CommonModule,
     BsDropdownModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-buttom-right'
@@ -30,6 +33,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     ButtonsModule.forRoot(),
     TimeagoModule.forRoot(),
     ModalModule.forRoot(),
+   
     
  
   ],
@@ -44,6 +48,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     ButtonsModule,
     TimeagoModule,
     ModalModule,
+  
     
   ] 
 })

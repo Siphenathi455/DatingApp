@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { NotFoundComponent } from './Errors/not-found/not-found.component';
+import { ServerErrorComponent } from './Errors/server-error/server-error.component';
 import { TestErrorsComponent } from './Errors/test-errors/test-errors.component';
 import { HomeComponent } from './home/home.component';
 import { ListsComponent } from './lists/lists.component';
@@ -29,9 +30,10 @@ const routes: Routes = [
       {path:'admin', component: AdminPanelComponent, canActivate: [AdminGuard]},
     ]
   },
-  {path: 'test-errors', component: TestErrorsComponent },
+  {path: 'Errors', component: TestErrorsComponent },
   {path: 'not-found', component: NotFoundComponent },
-  {path:'**', component: NotFoundComponent,pathMatch:'full'}
+  {path: 'server-error', component: ServerErrorComponent},
+  {path:'**', component: NotFoundComponent, pathMatch:'full'}
   
 
 ];

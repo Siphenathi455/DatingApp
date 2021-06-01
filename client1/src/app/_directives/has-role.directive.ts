@@ -3,11 +3,11 @@ import { take } from 'rxjs/operators';
 import { User } from '../_models/user';
 import { AccountService } from '../_Services/account.service';
 
-
 @Directive({
   selector: '[appHasRole]'
 })
 export class HasRoleDirective implements OnInit {
+
   @Input() appHasRole: string[];
   user: User;
 
@@ -32,5 +32,6 @@ export class HasRoleDirective implements OnInit {
       this.viewContainerRef.clear();
     }
   }
+
 
 }
