@@ -11,7 +11,7 @@ import { PresenceService } from './presence.service';
   providedIn: 'root'
 })
 export class AccountService {
-  baseUrl =environment;
+  baseUrl = environment;
   private currentUserSource = new ReplaySubject<User>(1);
   CurrentUser$ = this.currentUserSource.asObservable();
 
@@ -25,8 +25,9 @@ export class AccountService {
           this. setCurrentUser(user);
           this.presence.createHubConnection(user);
         }
+        console.log(response);
 
-      }));
+      }, error => { console.log(error)}));
     
   }
 
@@ -35,7 +36,7 @@ export class AccountService {
       map((user: User) => {
         if(user){
         
-          this. setCurrentUser(user);
+          this.setCurrentUser(user);
           this.presence.createHubConnection(user);
         }
      

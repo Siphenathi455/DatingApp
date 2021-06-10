@@ -39,6 +39,7 @@ import { PhotoManagementComponent } from './admin/photo-management/photo-managem
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
 import { HasRoleDirective } from './_directives/has-role.directive';
+import { VisitsComponent } from './visits/visits.component';
 
 
 
@@ -67,7 +68,8 @@ import { HasRoleDirective } from './_directives/has-role.directive';
     UserManagementComponent,
     PhotoManagementComponent,
     RolesModalComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    VisitsComponent
   ],
   imports: [
     BrowserModule,

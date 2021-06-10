@@ -7,6 +7,8 @@ namespace API.Interfaces
         IUserRepository UserRepository {get; }
         IMessageRepository MessageRepository {get; }
         ILikesRepository LikesRepository {get; }
+        IPhotoRepository PhotoRepository { get; }
+        IVisitsRepository VisitsRepository { get; }
 
         Task<bool> Complete();
 

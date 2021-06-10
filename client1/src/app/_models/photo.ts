@@ -3,4 +3,6 @@
     id: number;
     url: string;
     isMain: boolean;
+    isApproved: boolean;
+    Username? : string
   }

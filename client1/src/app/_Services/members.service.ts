@@ -63,10 +63,20 @@ export class MembersService {
   return this.http.post(this.baseUrl + 'likes/' + username, {});
 }
 
+addVisit(username: string) {
+  return this.http.post(this.baseUrl + 'visits/' + username, {});
+}
+
 getLikes(predicate: string, pageNumber , pageSize) {
   let params =  getPaginationHeaders(pageNumber, pageSize)
   params = params.append("predicate", predicate)
   return getPaginatedresult<Partial<Member[]>>(this.baseUrl + 'likes', params, this.http);
+}
+
+getVisits(predicate: string, pageNumber , pageSize) {
+  let params =  getPaginationHeaders(pageNumber, pageSize)
+  params = params.append("predicate", predicate)
+  return getPaginatedresult<Partial<Member[]>>(this.baseUrl + 'visits', params, this.http);
 }
 
 getMember(username: string) {

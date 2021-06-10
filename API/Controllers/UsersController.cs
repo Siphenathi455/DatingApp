@@ -117,8 +117,14 @@ namespace API.Controllers
             if (photo.IsMain) return BadRequest("This is already your main photo");
 
             var currentMain = user.Photos.FirstOrDefault(x => x.IsMain);
-            if (currentMain != null) currentMain.IsMain = false;
-            photo.IsMain = true;
+            if (currentMain != null && photo.isApproved)
+            {
+                currentMain.IsMain = false;
+                photo.IsMain = true;
+            }
+            else
+                return BadRequest("The photo is not approved, cannot set as main photo");
+
 
             if (await _unitOfWork.Complete()) return NoContent();
 

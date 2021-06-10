@@ -33,6 +33,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     ButtonsModule.forRoot(),
     TimeagoModule.forRoot(),
     ModalModule.forRoot(),
+    
    
     
  

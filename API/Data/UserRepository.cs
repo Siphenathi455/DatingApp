@@ -30,7 +30,7 @@ namespace API.Data
         public async Task<AppUser> GetUserByUsernameAsync(string username)
         {
             return await _context.Users
-             .Include(p => p.Photos)
+            .Include(p => p.Photos)
             .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
@@ -38,7 +38,7 @@ namespace API.Data
         {
            
             return await _context.Users
-             .Include(p => p.Photos)
+            .Include(p => p.Photos)
             .ToListAsync();
         }
 
@@ -75,6 +75,7 @@ namespace API.Data
         {
              return await _context.Users
               .Where(x => x.UserName == username)
+              .Include(p => p.Photos).IgnoreQueryFilters()
               .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
               .SingleOrDefaultAsync();
 

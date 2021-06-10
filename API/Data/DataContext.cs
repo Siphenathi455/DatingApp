@@ -18,26 +18,37 @@ namespace API.Data
        }
 
       
-       public DbSet<UserLike> Likes { get; set; }
-       public DbSet<Message> Messages { get; set; }
+        public DbSet<UserLike> Likes { get; set; }
+        public DbSet<UserVisit> Visits { get; set; }
+        public DbSet<Message> Messages { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Connection> Connections { get; set; }
+        public DbSet<Photo> Photos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             builder.Entity<AppUser>()
-    .HasMany(ur => ur.UserRoles)
-    .WithOne(u => u.User)
-    .HasForeignKey(ur => ur.UserId)
-    .IsRequired();
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.User)
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
 
-builder.Entity<AppRole>()
-    .HasMany(ur => ur.UserRoles)
-    .WithOne(u => u.Role)
-    .HasForeignKey(ur => ur.RoleId)
-    .IsRequired();
+            builder.Entity<AppRole>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.Role)
+                .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
+
+            builder.Entity<UserVisit>()
+                .HasKey(k => new {k.SourceUserId, k.VisitedUserId});
+
+             builder.Entity<UserVisit>()
+                .HasOne(s => s.SourceUser)
+                .WithMany(l => l.VisitedUsers)
+                .HasForeignKey(s => s.SourceUserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Specify primary key
             builder.Entity<UserLike>()
@@ -49,6 +60,7 @@ builder.Entity<AppRole>()
                 .WithMany(l => l.LikedUsers)
                 .HasForeignKey(s => s.SourceUserId)
                 .OnDelete(DeleteBehavior.Cascade);
+                // Note: For SQL Server, set the DeleteBehavior to
                 // Note: For SQL Server, set the DeleteBehavior to
                 // DeleteBehavior.NoAction or you will get an error during migration.
 
@@ -67,6 +79,8 @@ builder.Entity<AppRole>()
                 .HasOne(u => u.Sender)
                 .WithMany(m => m.MessageSent)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Photo>().HasQueryFilter(p => EF.Property<bool>(p, "isApproved") == true);
 
             builder.ApplyUtcDateTimeConverter();
         }

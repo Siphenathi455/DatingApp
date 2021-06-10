@@ -22,6 +22,7 @@ namespace API.Data
                 new AppRole{ Name = "Member"},
                 new AppRole{ Name = "Admin"},
                 new AppRole{ Name = "Moderator"},
+                 new AppRole{ Name = "VIP"},
             };
 
             foreach (var role in roles)
@@ -32,6 +33,11 @@ namespace API.Data
             foreach (var user in users)
             {
                 user.UserName = user.UserName.ToLower();
+              
+                foreach(Photo photo in user.Photos)
+                {
+                    photo.isApproved = true;
+                }
                 await userManager.CreateAsync(user, "Pa$$w0rd");
                 await userManager.AddToRoleAsync(user, "Member");
             }
@@ -43,6 +49,13 @@ namespace API.Data
 
             await userManager.CreateAsync(admin, "Pa$$w0rd");
             await userManager.AddToRolesAsync(admin , new[] { "Admin", "Moderator" });
+            var vip = new AppUser
+            {
+                UserName = "vip"
+            };
+
+            await userManager.CreateAsync(vip, "Pa$$w0rd");
+            await userManager.AddToRolesAsync(vip , new[] { "VIP", "Member" });
             
 
         }
