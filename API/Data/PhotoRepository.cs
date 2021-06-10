@@ -24,11 +24,19 @@ namespace API.Data
                
         }
 
-        public async Task<IEnumerable<Photo>> GetUnapprovedPhotos()
+        public async Task<IEnumerable<PhotoForApprovalDto>> GetUnapprovedPhotos()
         {
             return await _context.Photos
                 .Where(p => p.isApproved == false).IgnoreQueryFilters()
+                .Select(photo => new PhotoForApprovalDto
+                {
+                    Id = photo.Id,
+                    Url = photo.Url,
+                    Username = photo.AppUser.UserName,
+                    IsApproved = photo.isApproved
+                })
                 .ToListAsync();
+
         }
 
         public void RemovePhoto(int id)

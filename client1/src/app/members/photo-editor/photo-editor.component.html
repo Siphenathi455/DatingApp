@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-2" *ngFor="let photo of member.photos">
         <img src="{{photo.url}}" alt="{{photo.url}}" class="img-thumbnail p-1" />
+        <div *ngIf="!(photo.isApproved)" class="centered" style="color: red;" >Awaiting approval</div>
         <div class="text-center">
             <button 
             [disabled ="! photo.isApproved"]

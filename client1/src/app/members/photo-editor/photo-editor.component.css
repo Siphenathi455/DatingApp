@@ -1,6 +1,6 @@
 img.img-thumnail {
-    height: 100px;
-    min-width: 100px !important;
+    height: 150px;
+    min-width: 150px !important;
     margin-bottom: 2px;
 }
 
@@ -10,4 +10,10 @@ img.img-thumnail {
 
 input[type=file]{
     color: transparent;
+}
+.centered {
+ position :absolute;
+ top: 50%;
+ bottom: 50%;
+ transform: translate(-50%, -50%);
 }

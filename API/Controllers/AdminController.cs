@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using API.Interfaces;
 using System.Collections.Generic;
+using API.DTOs;
 
 namespace API.Controllers
 {
@@ -65,7 +66,7 @@ namespace API.Controllers
 
         [Authorize(Policy = "ModeratePhotoRole")]
         [HttpGet("photos-to-moderate")]
-        public async Task<ActionResult<IEnumerable<Photo>>> GetPhotosForModeration()
+        public async Task<ActionResult<IEnumerable<PhotoForApprovalDto>>> GetPhotosForModeration()
         {
             return Ok(await _unitOfWork.PhotoRepository.GetUnapprovedPhotos());
         }
